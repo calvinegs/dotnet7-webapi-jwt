@@ -1,7 +1,21 @@
+using dotnet7_webapi_jwt.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+ConfigurationManager _configuration = builder.Configuration;
 
+// Add services to the container.
+builder.Services.AddDbContext<ApiDbContext>(
+    options => options.UseNpgsql(
+        _configuration.GetConnectionString("ConnStr")
+    )
+);
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApiDbContext>()
+    .AddDefaultTokenProviders();
+    
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
