@@ -27,4 +27,6 @@ public partial class ApiDbContext : IdentityDbContext<IdentityUser>
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+    public DbSet<TodoList>? TodoList { get; set; }
 }
